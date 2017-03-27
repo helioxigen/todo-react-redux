@@ -1,7 +1,7 @@
 import React from 'react';
 import Omnibar from './components/Omnibar'
 import Afterbox from './components/Afterbox'
-import {Jumbotron, Modal} from 'react-bootstrap'
+import {PageHeader} from 'react-bootstrap'
 import './app.css'
 
 export default class App extends React.Component{
@@ -34,20 +34,13 @@ export default class App extends React.Component{
   }
   render(){
     return(
-      <Jumbotron>
-        <div className='static-modal'>
-          <Modal.Dialog>
-            <Modal.Header>
-              <Omnibar className="omnibar" handlePlusClick={this.addItem}/>
-            </Modal.Header>
-            <Modal.Body>
-              <Afterbox itemList={this.state.items}
-                        handleRemove={this.handleRemove}
-                        handleUpdate={this.handleUpdate}/>
-            </Modal.Body>
-          </Modal.Dialog>
-        </div>
-      </Jumbotron>
+      <div className='inner-body'>
+        <PageHeader>TODO_BLAT</PageHeader>
+        <Omnibar handlePlusClick={this.addItem}/>
+        <Afterbox itemList={this.state.items}
+                  handleRemove={this.handleRemove}
+                  handleUpdate={this.handleUpdate}/>
+      </div>
     )
   }
 }

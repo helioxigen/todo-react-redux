@@ -9,6 +9,8 @@ export default class Item extends React.Component{
       hover: false,
       editMode: false,
       doneStyle: {},
+      checkStyle: 'default',
+      listItemState: '',
       doneCheck: false
     }
   }
@@ -42,6 +44,8 @@ export default class Item extends React.Component{
         doneStyle: {
           'text-decoration': 'none'
         },
+        checkStyle: 'default',
+        listItemState: '',
         doneCheck: false
       })
     } else {
@@ -49,6 +53,8 @@ export default class Item extends React.Component{
         doneStyle: {
           'text-decoration': 'line-through'
         },
+        checkStyle: 'none',
+        listItemState: 'disabled',
         doneCheck: true
       })
     }
@@ -72,16 +78,18 @@ export default class Item extends React.Component{
         display: 'none'
       }
     } else {
-      body = <div style={this.state.doneStyle}>{this.props.children}</div>
+      body = <div className='itemText' style={this.state.doneStyle}>{this.props.children}</div>
     }
     return(
       <ListGroupItem
+          disabled={this.state.listItemState}
           className='item'
           onMouseEnter={this.handleMouseEnter}
           onMouseLeave={this.handleMouseLeave}
           style={this.state.doneStyle}>
-      <Options style={hoverStyle} onRemoveClick={this.handleRemoveClick} onEditClick={this.handleEditButtonClick}/>
-      <Checkbox onClick={this.handleDoneClick}>{body}</Checkbox>
+        <Options style={hoverStyle} onRemoveClick={this.handleRemoveClick} onEditClick={this.handleEditButtonClick}/>
+        <Button bsSize='xs' bsStyle={this.state.checkStyle} onClick={this.handleDoneClick} style={{display: 'inline-block'}}><Glyphicon glyph='ok'></Glyphicon></Button>
+        {body}
       </ListGroupItem>
     )
   }

@@ -29,7 +29,7 @@ export default class Omnibar extends React.Component{
   }
   render(){
     return(
-      <form onSubmit={this.handleSubmit}>
+      <form className='omnibar' onSubmit={this.handleSubmit}>
         <FormGroup validationState={this.state.validation}>
           <InputGroup>
             <FormControl  type='text' value={this.state.boxValue} onChange={this.updateValue}/>
