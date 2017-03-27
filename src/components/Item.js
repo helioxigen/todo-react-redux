@@ -1,4 +1,6 @@
 import React from 'react'
+import {ListGroupItem, FormControl, Button, Glyphicon, FormGroup, InputGroup,
+        ButtonToolbar, ButtonGroup, Checkbox} from 'react-bootstrap'
 
 export default class Item extends React.Component{
   constructor(){
@@ -6,7 +8,8 @@ export default class Item extends React.Component{
     this.state = {
       hover: false,
       editMode: false,
-      doneStyle: {}
+      doneStyle: {},
+      doneCheck: false
     }
   }
   handleMouseEnter = () => {
@@ -34,11 +37,21 @@ export default class Item extends React.Component{
     })
   }
   handleDoneClick = () => {
-    this.setState({
-      doneStyle: {
-        'text-decoration': 'line-through'
-      }
-    })
+    if(this.state.doneCheck){
+      this.setState({
+        doneStyle: {
+          'text-decoration': 'none'
+        },
+        doneCheck: false
+      })
+    } else {
+      this.setState({
+        doneStyle: {
+          'text-decoration': 'line-through'
+        },
+        doneCheck: true
+      })
+    }
   }
   render(){
     let hoverStyle, body
@@ -59,27 +72,30 @@ export default class Item extends React.Component{
         display: 'none'
       }
     } else {
-      body = this.props.children
+      body = <div style={this.state.doneStyle}>{this.props.children}</div>
     }
     return(
-      <li className='item'
+      <ListGroupItem
+          className='item'
           onMouseEnter={this.handleMouseEnter}
           onMouseLeave={this.handleMouseLeave}
           style={this.state.doneStyle}>
-        {body}
-      <input style={hoverStyle}
-               onClick={this.handleRemoveClick}
-               type='button'
-               value='x'/>
-      <input style={hoverStyle}
-             onClick={this.handleEditButtonClick}
-             type='button'
-             value='e'/>
-           <input style={hoverStyle}
-             onClick={this.handleDoneClick}
-             type='button'
-             value='V'/>
-      </li>
+      <Options style={hoverStyle} onRemoveClick={this.handleRemoveClick} onEditClick={this.handleEditButtonClick}/>
+      <Checkbox onClick={this.handleDoneClick}>{body}</Checkbox>
+      </ListGroupItem>
+    )
+  }
+}
+
+class Options extends React.Component{
+  render(){
+    return(
+      <ButtonToolbar className='options' style={this.props.style}>
+        <ButtonGroup>
+          <Button bsSize='xs' bsStyle='default' onClick={this.props.onRemoveClick}><Glyphicon glyph='remove'/></Button>
+          <Button bsSize='xs' bsStyle='default' onClick={this.props.onEditClick}><Glyphicon glyph='pencil'/></Button>
+        </ButtonGroup>
+      </ButtonToolbar>
     )
   }
 }
@@ -91,7 +107,7 @@ class EditField extends React.Component{
       editValue: props.val
     }
   }
-  handleEditClick = () => {
+  handleSubmit = () => {
     this.props.handleEditClick(this.state.editValue)
   }
   updateValue = (evt) => {
@@ -101,10 +117,16 @@ class EditField extends React.Component{
   }
   render(){
     return(
-      <div>
-        <input defaultValue={this.props.val} onChange={this.updateValue}/>
-        <input type='button' onClick={this.handleEditClick} value='V'/>
-      </div>
+      <form onSubmit={this.handleSubmit}>
+        <FormGroup>
+          <InputGroup>
+            <FormControl type='text' defaultValue={this.state.editValue} onChange={this.updateValue}/>
+            <InputGroup.Button>
+              <Button bsStyle='success' onClick={this.handleSubmit}><Glyphicon glyph='ok'/></Button>
+            </InputGroup.Button>
+          </InputGroup>
+        </FormGroup>
+      </form>
     )
   }
 }

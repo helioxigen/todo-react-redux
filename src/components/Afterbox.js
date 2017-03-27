@@ -1,5 +1,6 @@
 import React from 'react'
 import Item from './Item.js'
+import {ListGroup} from 'react-bootstrap'
 
 export default class Afterbox extends React.Component{
   constructor(props){
@@ -15,7 +16,7 @@ export default class Afterbox extends React.Component{
     const itemList = this.props.itemList
     return(
       <div>
-        <ul>
+        <ListGroup>
           {itemList.map((entry, index) => {
             return <Item
                       key={index}
@@ -25,7 +26,7 @@ export default class Afterbox extends React.Component{
                         {entry}
                    </Item>
           })}
-        </ul>
+        </ListGroup>
       </div>
     )
   }

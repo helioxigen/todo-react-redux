@@ -1,11 +1,5 @@
-.remove{
-  display: none;
-}
-.item:hover{
-  border-bottom: 1px solid black;
-
-}
-
-.itemList:hover~.remove{
-  display: block;
+.options{
+  position: absolute;
+  top: -23px;
+  left: 3px;
 }
