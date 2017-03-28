@@ -1,33 +1,34 @@
 import React from 'react'
-import Item from './Item.js'
-import {ListGroup} from 'react-bootstrap'
+import { connect } from 'react-redux'
+import { ListGroup } from 'react-bootstrap'
 
-export default class Afterbox extends React.Component{
-  constructor(props){
-    super(props)
-  }
-  handleRemove = (key) => {
-    this.props.handleRemove(key)
-  }
-  handleUpdate = (key, newVal) => {
-    this.props.handleUpdate(key, newVal)
-  }
+import Item from './Item.js'
+
+
+class Afterbox extends React.Component{
   render(){
-    const itemList = this.props.itemList
+    const itemList = this.props.items
     return(
       <div>
         <ListGroup>
-          {itemList.map((entry, index) => {
-            return <Item
-                      key={index}
-                      index={index}
-                      handleRemoveClick={this.handleRemove}
-                      handleUpdate={this.handleUpdate}>
-                        {entry}
-                   </Item>
-          })}
+          {itemList.map( item => (
+            <Item key={item.get('id')}
+                  index={item.get('id')}
+                  checked={item.get('checked')}
+                  editMode={item.get('editMode')}>
+              {item.get('text')}
+            </Item>
+          ))}
         </ListGroup>
       </div>
     )
   }
 }
+
+function mapStateToProps(state){
+  return {
+    items: state
+  }
+}
+
+export default connect(mapStateToProps)(Afterbox)
