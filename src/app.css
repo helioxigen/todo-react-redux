@@ -22,15 +22,20 @@
 }
 
 .item.edit-mode{
-  padding-bottom: 0;
+  padding: 0;
 }
 
 .editfield{
   display: none;
 }
 
+.item.edit-mode .editfield > .form-group{
+  margin-bottom: -5px;
+}
+
 .item.edit-mode>.editfield{
   display: inline-block;
+  padding: 4px;
 }
 
 .item.edit-mode>.itemText{
@@ -43,4 +48,12 @@
 
 .item:hover>.options{
   display: block;
+}
+.list-group>.item:hover{
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.options>.btn-group-vertical>.btn.btn-xs.btn-default{
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
