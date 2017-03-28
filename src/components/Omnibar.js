@@ -1,12 +1,15 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import {addTodo} from '../Actions'
 import {Button, FormGroup, InputGroup, FormControl, Glyphicon} from 'react-bootstrap'
 
-export default class Omnibar extends React.Component{
+class Omnibar extends React.Component{
   constructor(props){
     super(props)
     this.state = {
       boxValue: '',
-      validation: null
+      validation: true
     }
   }
   updateValue = (evt) =>{
@@ -14,25 +17,27 @@ export default class Omnibar extends React.Component{
       boxValue: evt.target.value
     })
   }
-  handleSubmit = () =>{
+  handleSubmit = (e) =>{
+    e.preventDefault()
     if (this.state.boxValue === ''){
       this.setState({
-        validation: 'error'
+        validation: false
       })
     } else {
-      this.props.handlePlusClick(this.state.boxValue)
+      this.props.addTodo(this.state.boxValue)
       this.setState({
-        validation: null,
-        boxValue: ''
+        boxValue: '',
+        validation: true
       })
     }
   }
   render(){
+
     return(
       <form className='omnibar' onSubmit={this.handleSubmit}>
-        <FormGroup validationState={this.state.validation}>
+        <FormGroup validationState={this.state.validation ? null : 'error'}>
           <InputGroup>
-            <FormControl  type='text' value={this.state.boxValue} onChange={this.updateValue}/>
+            <FormControl type='text' value={this.state.boxValue} onChange={this.updateValue}/>
             <InputGroup.Button>
               <Button bsStyle='primary' onClick={this.handleSubmit}><Glyphicon glyph='plus'/></Button>
             </InputGroup.Button>
@@ -42,3 +47,12 @@ export default class Omnibar extends React.Component{
     )
   }
 }
+
+
+function mapDispatchToProps(dispatch) {
+  return {
+    addTodo: bindActionCreators(addTodo, dispatch)
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Omnibar)
