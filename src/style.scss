@@ -1,0 +1,52 @@
+.App__container {
+    padding: 20px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.options {
+    display: none;
+    position: absolute;
+    top: -1px;
+    left: -20px;
+    > .btn-group-vertical > .btn.btn-xs.btn-default {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+}
+.omnibar {
+    margin-bottom: 30px;
+}
+.itemText {
+    display: inline-block;
+    padding-left: 10px;
+}
+
+.item {
+    position: relative;
+    &.edit-mode {
+        padding: 0;
+        .check {
+            display: none;
+        }
+    }
+    .form-group {
+        margin: 0;
+    }
+    .form-control{
+      padding: 20px 10px;
+    }
+    .btn-success{
+      padding: 10px 20px;
+    }
+    &.checked .itemText {
+        text-decoration: line-through;
+    }
+    &:hover {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        .options {
+            display: block;
+        }
+    }
+}
